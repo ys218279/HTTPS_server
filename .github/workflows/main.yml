@@ -19,8 +19,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        ls
-        PYTHONPATH=$(pwd)               
+        ls               
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
@@ -32,4 +31,4 @@ jobs:
     - name: Run tests
       run: |
         ls
-        pytest -vvvrP tests/
+        PYTHONPATH=. pytest -vvvrP tests/
