@@ -22,6 +22,7 @@ def build_http_response(content):
         "\r\n" +
         body
     )
+    print(response)
     return response.encode("utf-8")
 
 def handle_client(client_socket):
@@ -38,12 +39,3 @@ def handle_client(client_socket):
         response = build_http_response("IDK wtf this is")
     client_socket.sendall(response)
     client_socket.close()
-
-def start_server():
-    sock = create_socket()
-    bind_socket(sock, "127.0.0.1", 8080)
-    while True:
-        client_socket = accept_connection(sock)
-        handle_client(client_socket)
-
-start_server()
