@@ -1,15 +1,15 @@
-from http_server.httpServer import create_server, find_client
+from http_server.httpServer import create_socket, accept_connection,bind_socket,build_http_response
+import pycurl
 import pytest, socket
 
-server_ip = "127.0.0.1"
-port = 8000
-server = create_server(server_ip,port)
-client_ip = "127.0.0.1"
-client_port = 8000
+@pytest.fixture
+def server():
+    sock = create_socket()
+    bind_socket(sock, "127.0.0.1", 8000)
+    return sock
+def test_create_socket(server):
+    assert server.getsockname() == ("127.0.0.1", 8000)
 
-def test_create_server():
-    assert server.getsockname() == ('127.0.0.1', 8000)
-
-def test_find_client():
-    pass
-    #assert find_client(server) == f"Accepted connection from {client_address[0]}:{client_address[1]}"
+def test_http_build_response():
+    http_response = build_http_response("This is a response")
+    assert http_response.decode().endswith("<html><body>This is a response</body></html>")
